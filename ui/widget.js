@@ -283,6 +283,9 @@ $.Widget.prototype = {
 		this._create();
 		this._trigger( "create", null, this._getCreateEventData() );
 		this._init();
+		if ( this.options.disabled === true ) {
+			this._setOption( "disabled", true );
+		}
 	},
 	_getCreateOptions: $.noop,
 	_getCreateEventData: $.noop,
