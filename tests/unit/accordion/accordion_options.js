@@ -290,6 +290,64 @@ test( "{ collapsible: true }", function() {
 	state( element, 0, 0, 0 );
 });
 
+test( "{ disabled: true }", function() {
+	expect( 7 );
+	var element = $( "#list1" ).accordion({
+		disabled: true
+	});
+	state( element, 1, 0, 0 );
+
+	ok( element.hasClass( "ui-state-disabled" ), "element gets ui-state-disabled" );
+	equal( element.attr( "aria-disabled" ), "true", "element gets aria-disabled" );
+	ok( element.hasClass( "ui-accordion-disabled" ), "element gets ui-accordion-disabled" );
+
+	// event does nothing
+	element.find( ".ui-accordion-header" ).eq( 1 ).trigger( "click" );
+	state( element, 1, 0, 0 );
+	// option still works
+	element.accordion( "option", "active", 1 );
+	state( element, 0, 1, 0 );
+	element.accordion( "enable" );
+	element.accordion( "option", "active", 2 );
+	state( element, 0, 0, 1 );
+});
+
+test( "{ disabled: true } option method", function() {
+	expect( 9 );
+	var element = $( "#list1" ).accordion();
+	state( element, 1, 0, 0 );
+	ok( !element.hasClass( "ui-state-disabled" ), "element doesn't get ui-state-disabled" );
+	equal( element.attr( "aria-disabled" ), undefined, "element doesn't get aria-disabled" );
+	ok( !element.hasClass( "ui-accordion-disabled" ), "element doesn't get ui-accordion-disabled" );
+
+	element.accordion( "option", "disabled", true );
+
+	ok( element.hasClass( "ui-state-disabled" ), "element gets ui-state-disabled" );
+	equal( element.attr( "aria-disabled" ), "true", "element gets aria-disabled" );
+	ok( element.hasClass( "ui-accordion-disabled" ), "element gets ui-accordion-disabled" );
+
+	// event does nothing
+	element.find( ".ui-accordion-header" ).eq( 1 ).trigger( "click" );
+	state( element, 1, 0, 0 );
+	// option still works
+	element.accordion( "option", "active", 1 );
+	state( element, 0, 1, 0 );
+});
+
+test( "{ disabled: false } option method", function() {
+	expect( 5 );
+	var element = $( "#list1" ).accordion();
+	state( element, 1, 0, 0 );
+	element.accordion( "option", "disabled", false );
+
+	ok( !element.hasClass( "ui-state-disabled" ), "element no longer gets ui-state-disabled" );
+	equal( element.attr( "aria-disabled" ), "false", "element aria-disabled is false" );
+	ok( !element.hasClass( "ui-accordion-disabled" ), "element no longer gets ui-accordion-disabled" );
+
+	element.find( ".ui-accordion-header" ).eq( 2 ).trigger( "click" );
+	state( element, 0, 0, 1 );
+});
+
 test( "{ event: null }", function() {
 	expect( 5 );
 	var element = $( "#list1" ).accordion({
