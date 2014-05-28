@@ -11,7 +11,7 @@ module( "menu: options", {
 });
 
 test( "{ disabled: true }", function() {
-	expect( 2 );
+	expect( 3 );
 	var element = $( "#menu1" ).menu({
 		disabled: true,
 		select: function() {
@@ -19,6 +19,23 @@ test( "{ disabled: true }", function() {
 		}
 	});
 	ok( element.hasClass( "ui-state-disabled" ), "Missing ui-state-disabled class" );
+	equal( element.attr( "aria-disabled" ), "true", "Missing aria-disabled" );
+	log( "click", true );
+	click( element, "1" );
+	log( "afterclick" );
+	equal( logOutput(), "click,afterclick", "Click order not valid." );
+});
+
+test( "{ disabled: true } option method", function() {
+	expect( 3 );
+	var element = $( "#menu1" ).menu({
+		select: function() {
+			log();
+		}
+	});
+	element.menu( "option", "disabled", true );
+	ok( element.hasClass( "ui-state-disabled" ), "Missing ui-state-disabled class" );
+	equal( element.attr( "aria-disabled" ), "true", "Missing aria-disabled" );
 	log( "click", true );
 	click( element, "1" );
 	log( "afterclick" );
@@ -26,7 +43,7 @@ test( "{ disabled: true }", function() {
 });
 
 test( "{ disabled: false }", function() {
-	expect( 2 );
+	expect( 3 );
 	var element = $( "#menu1" ).menu({
 		disabled: false,
 		select: function() {
@@ -34,6 +51,24 @@ test( "{ disabled: false }", function() {
 		}
 	});
 	ok( !element.hasClass( "ui-state-disabled" ), "Has ui-state-disabled class" );
+	equal( element.attr( "aria-disabled" ), undefined, "Has aria-disabled" );
+	log( "click", true );
+	click( element, "1" );
+	log( "afterclick" );
+	equal( logOutput(), "click,1,afterclick", "Click order not valid." );
+});
+
+test( "{ disabled: false } option method", function() {
+	expect( 3 );
+	var element = $( "#menu1" ).menu({
+		disabled: true,
+		select: function() {
+			log();
+		}
+	});
+	element.menu( "option", "disabled", false );
+	ok( !element.hasClass( "ui-state-disabled" ), "Has ui-state-disabled class" );
+	equal( element.attr( "aria-disabled" ), "false", "Wrong value aria-disabled" );
 	log( "click", true );
 	click( element, "1" );
 	log( "afterclick" );

@@ -27,7 +27,7 @@ test( "destroy", function() {
 });
 
 test( "enable/disable", function() {
-	expect( 3 );
+	expect( 5 );
 	var element = $( "#menu1" ).menu({
 		select: function() {
 			log();
@@ -35,11 +35,13 @@ test( "enable/disable", function() {
 	});
 	element.menu( "disable" );
 	ok( element.is( ".ui-state-disabled" ), "Missing ui-state-disabled class" );
+	equal( element.attr( "aria-disabled" ), "true", "Wrong value aria-disabled" );
 	log( "click", true );
 	click( element, "1" );
 	log( "afterclick" );
 	element.menu( "enable" );
 	ok( element.not( ".ui-state-disabled" ), "Has ui-state-disabled class" );
+	equal( element.attr( "aria-disabled" ), "false", "Wrong value aria-disabled" );
 	log( "click" );
 	click( element, "1" );
 	log( "afterclick" );
