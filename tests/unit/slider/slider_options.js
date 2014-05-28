@@ -9,7 +9,7 @@ function handle() {
 module( "slider: options" );
 
 test( "disabled", function(){
-	expect( 8 );
+	expect( 10 );
 	var count = 0;
 
 	element = $( "#slider1" ).slider();
@@ -18,6 +18,7 @@ test( "disabled", function(){
 	});
 
 	// enabled
+	ok( !element.hasClass( "ui-state-disabled" ), "no disabled class" );
 	ok( !element.hasClass( "ui-slider-disabled" ), "no disabled class" );
 	equal( element.slider( "option", "disabled" ), false , "is not disabled" );
 
@@ -29,6 +30,7 @@ test( "disabled", function(){
 
 	// disabled
 	element.slider( "option", "disabled", true );
+	ok( element.hasClass( "ui-state-disabled" ), "has disabled class" );
 	ok( element.hasClass( "ui-slider-disabled" ), "has disabled class" );
 	equal( element.slider( "option", "disabled" ), true, "is disabled" );
 
