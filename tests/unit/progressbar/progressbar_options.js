@@ -1,5 +1,55 @@
 module( "progressbar: options" );
 
+test( "{ disabled: true }", function() {
+	expect( 3 );
+	var element = $( "#progressbar" ).progressbar({
+			disabled: true
+		}),
+		widget = element.progressbar( "widget" );
+
+	ok( widget.hasClass( "ui-state-disabled" ), "element gets ui-state-disabled" );
+	equal( widget.attr( "aria-disabled" ), "true", "element gets aria-disabled" );
+	ok( widget.hasClass( "ui-progressbar-disabled" ), "element gets ui-progressbar-disabled" );
+});
+
+test( "{ disabled: true } option method", function() {
+	expect( 3 );
+	var element = $( "#progressbar" ).progressbar(),
+		widget = element.progressbar( "widget" );
+
+	element.progressbar( "option", "disabled", true );
+
+	ok( widget.hasClass( "ui-state-disabled" ), "element gets ui-state-disabled" );
+	equal( widget.attr( "aria-disabled" ), "true", "element gets aria-disabled" );
+	ok( widget.hasClass( "ui-progressbar-disabled" ), "element gets ui-progressbar-disabled" );
+});
+
+test( "{ disabled: false }", function() {
+	expect( 3 );
+	var element = $( "#progressbar" ).progressbar({
+			disabled: false
+		}),
+		widget = element.progressbar( "widget" );
+
+	ok( !widget.hasClass( "ui-state-disabled" ), "element no longer has ui-state-disabled" );
+	equal( widget.attr( "aria-disabled" ), undefined,  "element doesn't have aria-disabled" );
+	ok( !widget.hasClass( "ui-progressbar-disabled" ), "element no longer has ui-progressbar-disabled" );
+});
+
+test( "{ disabled: false } option method", function() {
+	expect( 3 );
+	var element = $( "#progressbar" ).progressbar({
+			disabled: true
+		}),
+		widget = element.progressbar( "widget" );
+
+	element.progressbar( "option", "disabled", false );
+
+	ok( !widget.hasClass( "ui-state-disabled" ), "element no longer has ui-state-disabled" );
+	equal( widget.attr( "aria-disabled" ), "false",  "element aria-disabled is false" );
+	ok( !widget.hasClass( "ui-progressbar-disabled" ), "element no longer has ui-progressbar-disabled" );
+});
+
 test( "{ value: 0 }, default", function() {
 	expect( 1 );
 	$( "#progressbar" ).progressbar();

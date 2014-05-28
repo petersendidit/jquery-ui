@@ -10,11 +10,25 @@ test( "destroy", function() {
 test( "disable", function() {
 	expect( 3 );
 
-	var element = $( "#progressbar" ).progressbar().progressbar( "disable" );
+	var element = $( "#progressbar" ).progressbar().progressbar( "disable" ),
+		widget = element.progressbar( "widget" );
 
-	ok( element.progressbar( "widget" ).hasClass( "ui-state-disabled" ), "element gets ui-state-disabled" );
-	ok( element.progressbar( "widget" ).attr( "aria-disabled" ), "element gets aria-disabled" );
-	ok( element.progressbar( "widget" ).hasClass( "ui-progressbar-disabled" ), "element gets ui-progressbar-disabled" );
+	ok( widget.hasClass( "ui-state-disabled" ), "element gets ui-state-disabled" );
+	equal( widget.attr( "aria-disabled" ), "true", "element gets aria-disabled" );
+	ok( widget.hasClass( "ui-progressbar-disabled" ), "element gets ui-progressbar-disabled" );
+});
+
+test( "enable", function() {
+	expect( 3 );
+
+	var element = $( "#progressbar" ).progressbar({
+			disabled: true
+		}).progressbar( "enable" ),
+		widget = element.progressbar( "widget" );
+
+	ok( !widget.hasClass( "ui-state-disabled" ), "element no longer has ui-state-disabled" );
+	equal( widget.attr( "aria-disabled" ), "false",  "element aria-disabled is false" );
+	ok( !widget.hasClass( "ui-progressbar-disabled" ), "element no longer has ui-progressbar-disabled" );
 });
 
 test( "value", function() {
