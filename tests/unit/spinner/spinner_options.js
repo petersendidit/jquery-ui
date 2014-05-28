@@ -4,6 +4,56 @@ module( "spinner: options" );
 
 // culture is tested after numberFormat, since it depends on numberFormat
 
+test( "{ disabled: true }", function() {
+	expect( 6 );
+	var element = $( "#spin" ).spinner({
+			disabled: true
+		}),
+		widget = element.spinner( "widget" );
+	ok( widget.hasClass( "ui-spinner-disabled" ), "widget has ui-spinner-disabled class" );
+	ok( widget.hasClass( "ui-state-disabled" ), "widget has ui-state-disabled class" );
+	ok( !element.hasClass( "ui-spinner-disabled" ), "element doesn't have ui-spinner-disabled class" );
+	ok( !element.hasClass( "ui-state-disabled" ), "element doesn't have ui-state-disabled class" );
+	ok( !widget.attr( "aria-disabled" ), "widget does not have aria-disabled attr" );
+	ok( element.is( ":disabled" ), "input has disabled attribute" );
+});
+
+test( "{ disabled: true } option method", function() {
+	expect( 6 );
+	var element = $( "#spin" ).spinner(),
+		widget = element.spinner( "widget" );
+	element.spinner( "option", "disabled", true );
+	ok( widget.hasClass( "ui-spinner-disabled" ), "widget has ui-spinner-disabled class" );
+	ok( widget.hasClass( "ui-state-disabled" ), "widget has ui-state-disabled class" );
+	ok( !element.hasClass( "ui-spinner-disabled" ), "element doesn't have ui-spinner-disabled class" );
+	ok( !element.hasClass( "ui-state-disabled" ), "element doesn't have ui-state-disabled class" );
+	ok( !widget.attr( "aria-disabled" ), "widget does not have aria-disabled attr" );
+	ok( element.is( ":disabled" ), "input has disabled attribute" );
+});
+
+test( "{ disabled: false }", function() {
+	expect( 3 );
+	var element = $( "#spin" ).spinner({
+			disabled: false
+		}),
+		widget = element.spinner( "widget" );
+	ok( !widget.hasClass( "ui-spinner-disabled" ), "widget doesn't have ui-spinner-disabled class" );
+	ok( !widget.hasClass( "ui-state-disabled" ), "widget doesn't have ui-state-disabled class" );
+	ok( !element.is( ":disabled" ), "input doesn't have disabled attribute" );
+});
+
+test( "{ disabled: false } option method", function() {
+	expect( 3 );
+	var element = $( "#spin" ).spinner({
+			disabled: true
+		}),
+		widget = element.spinner( "widget" );
+	element.spinner( "option", "disabled", false );
+	ok( !widget.hasClass( "ui-spinner-disabled" ), "widget doesn't have ui-spinner-disabled class" );
+	ok( !widget.hasClass( "ui-state-disabled" ), "widget doesn't have ui-state-disabled class" );
+	ok( !element.is( ":disabled" ), "input doesn't have disabled attribute" );
+});
+
 test( "icons: default ", function() {
 	expect( 4 );
 	var element = $( "#spin" ).val( 0 ).spinner();
