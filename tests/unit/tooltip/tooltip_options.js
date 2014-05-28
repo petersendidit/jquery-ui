@@ -3,11 +3,66 @@
 module( "tooltip: options" );
 
 test( "disabled: true", function() {
-	expect( 1 );
-	$( "#tooltipped1" ).tooltip({
-		disabled: true
-	}).tooltip( "open" );
+	expect( 6 );
+	var element = $( "#tooltipped1" ).tooltip({
+			disabled: true
+		}).tooltip( "open" ),
+		tooltip = $( "#" + element.data( "ui-tooltip-id" ) ),
+		widget = element.tooltip( "widget" );
+
+	ok( !element.hasClass( ".ui-tooltip-disabled" ), "doens't have class" );
+	ok( !widget.hasClass( "ui-state-disabled" ), " doesn't get ui-state-disabled" );
+	ok( !widget.attr( "aria-disabled" ), " doesn't get aria-disabled" );
+	ok( !widget.hasClass( "ui-tooltip-disabled" ), " doesn't get ui-tooltip-disabled" );
+	// support: jQuery <1.6.2
+	// support: IE <8
+	// We should use strictEqual( ..., undefined ) when dropping jQuery 1.6.1 support (or IE6/7)
+	ok( !tooltip.attr( "title" ), "title removed on disable" );
 	equal( $( ".ui-tooltip" ).length, 0 );
+});
+test( "disabled: true option method", function() {
+	expect( 6 );
+	var element = $( "#tooltipped1" ).tooltip(),
+		tooltip = $( "#" + element.data( "ui-tooltip-id" ) ),
+		widget = element.tooltip( "widget" );
+
+	element.tooltip( "option", "disabled", true );
+	element.tooltip( "open" );
+
+	ok( !element.hasClass( ".ui-tooltip-disabled" ), "doens't have class" );
+	ok( !widget.hasClass( "ui-state-disabled" ), " doesn't get ui-state-disabled" );
+	ok( !widget.attr( "aria-disabled" ), " doesn't get aria-disabled" );
+	ok( !widget.hasClass( "ui-tooltip-disabled" ), " doesn't get ui-tooltip-disabled" );
+	// support: jQuery <1.6.2
+	// support: IE <8
+	// We should use strictEqual( ..., undefined ) when dropping jQuery 1.6.1 support (or IE6/7)
+	ok( !tooltip.attr( "title" ), "title removed on disable" );
+	equal( $( ".ui-tooltip" ).length, 0 );
+});
+
+test( "disabled: false", function() {
+	expect( 1 );
+	$.fx.off = true;
+	var element = $( "#tooltipped1" ).tooltip({
+			disabled: false
+		}).tooltip( "open" ),
+		tooltip = $( "#" + element.data( "ui-tooltip-id" ) );
+	ok( tooltip.is( ":visible" ) );
+	$.fx.off = false;
+});
+
+test( "disabled: false option method", function() {
+	expect( 1 );
+	$.fx.off = true;
+	var tooltip,
+		element = $( "#tooltipped1" ).tooltip({
+			disabled: true
+		});
+	element.tooltip( "option", "disabled", false );
+	element.tooltip( "open" );
+	tooltip = $( "#" + element.data( "ui-tooltip-id" ) );
+	ok( tooltip.is( ":visible" ) );
+	$.fx.off = false;
 });
 
 test( "content: default", function() {
