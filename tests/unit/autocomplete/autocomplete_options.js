@@ -115,13 +115,14 @@ asyncTest( "delay", function() {
 	}, 100 );
 });
 
-asyncTest( "disabled", function() {
+asyncTest( "{ disabled: true }", function() {
 	expect( 5 );
 	var element = $( "#autocomplete" ).autocomplete({
 			source: data,
-			delay: 0
+			delay: 0,
+			disabled: true
 		}),
-		menu = element.autocomplete( "disable" ).autocomplete( "widget" );
+		menu = element.autocomplete( "widget" );
 	element.val( "ja" ).keydown();
 
 	ok( menu.is( ":hidden" ) );
@@ -132,6 +133,63 @@ asyncTest( "disabled", function() {
 
 	setTimeout(function() {
 		ok( menu.is( ":hidden" ) );
+		start();
+	}, 50 );
+});
+
+asyncTest( "{ disabled: true } option method", function() {
+	expect( 5 );
+	var element = $( "#autocomplete" ).autocomplete({
+			source: data,
+			delay: 0
+		}),
+		menu = element.autocomplete( "widget" );
+	element.val( "ja" ).keydown();
+	element.autocomplete( "option", "disabled", true );
+
+	ok( menu.is( ":hidden" ) );
+
+	ok( !element.is( ".ui-state-disabled" ), "element doesn't get ui-state-disabled" );
+	ok( !element.attr( "aria-disabled" ), "element doesn't get aria-disabled" );
+	ok( menu.is( ".ui-autocomplete-disabled" ), "element gets ui-autocomplete-disabled" );
+
+	setTimeout(function() {
+		ok( menu.is( ":hidden" ) );
+		start();
+	}, 50 );
+});
+
+asyncTest( "{ disabled: false }", function() {
+	expect( 2 );
+	var element = $( "#autocomplete" ).autocomplete({
+			source: data,
+			delay: 0,
+			disabled: false
+		}),
+		menu = element.autocomplete( "widget" );
+	element.val( "ja" ).keydown();
+
+	ok( !menu.is( ".ui-autocomplete-disabled" ), "element doesn't get ui-autocomplete-disabled" );
+	setTimeout(function() {
+		ok( menu.is( ":visible" ), "menu is visible" );
+		start();
+	}, 50 );
+});
+
+asyncTest( "{ disabled: false } option method", function() {
+	expect( 2 );
+	var element = $( "#autocomplete" ).autocomplete({
+			source: data,
+			delay: 0,
+			disabled: true
+		}),
+		menu = element.autocomplete( "widget" );
+	element.autocomplete( "option", "disabled", false );
+	element.val( "ja" ).keydown();
+
+	ok( !menu.is( ".ui-autocomplete-disabled" ), "element doesn't get ui-autocomplete-disabled" );
+	setTimeout(function() {
+		ok( menu.is( ":visible" ), "menu is visible" );
 		start();
 	}, 50 );
 });
