@@ -51,7 +51,7 @@ test( "{ disabled: false }", function() {
 		}
 	});
 	ok( !element.hasClass( "ui-state-disabled" ), "Has ui-state-disabled class" );
-	equal( element.attr( "aria-disabled" ), undefined, "Has aria-disabled" );
+	equal( element.attr( "aria-disabled" ), "false", "Has aria-disabled" );
 	log( "click", true );
 	click( element, "1" );
 	log( "afterclick" );

@@ -320,7 +320,7 @@ test( "re-init", function() {
 
 	actions = [];
 	div.testWidget({ foo: "bar" });
-	deepEqual( actions, [ "create", "init" ], "correct methods called on init" );
+	deepEqual( actions, [ "create", "init", "optiondisabled" ], "correct methods called on init" );
 
 	actions = [];
 	div.testWidget();
@@ -602,7 +602,7 @@ test( ".option() - deep option setter", function() {
 });
 
 test( ".enable()", function() {
-	expect( 2 );
+	expect( 4 );
 	$.widget( "ui.testWidget", {
 		_create: function() {},
 		_setOption: function( key, val ) {
